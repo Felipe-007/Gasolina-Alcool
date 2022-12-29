@@ -1,20 +1,36 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+/**
+ * Gasolina ou Álcool
+ */
+import React, { Component } from "react";
+import { View, Text, Image, TextInput } from "react-native";
+import { styles } from "./styles";
 
-export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
+export default class App extends Component {
+
+  constructor(props) {
+    super(props);
+    this.state = {
+
+    };
+  }
+  render() {
+    return (
+      <View style={styles.container}>
+        <View style={styles.header}>
+          <Image
+            source={require('./src/img/logo.png')}
+          />
+          <Text style={styles.texto1}>Qual a melhor opção?</Text>
+        </View>
+        <View style={styles.body}>
+          <Text style={styles.texto2}>Álcool (preço por litro):</Text>
+
+          <TextInput
+            style={styles.input}
+            placeholder = 'R$ '
+          />
+        </View>
+      </View>
+    )
+  }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
