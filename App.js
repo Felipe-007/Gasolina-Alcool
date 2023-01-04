@@ -10,58 +10,81 @@ export default class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      gasolina: '',
-      alcool: '',
+      gasolina: 0,
+      alcool: 0,
+      resultado: 0,
       visivel: false,
     };
 
     this.enviar = this.enviar.bind(this)
   }
 
-  enviar() {
-    this.setState({ visivel: true })
-    if (this.state.gasolina === '' || this.state.alcool === '') {
-      alert('Preencha todos dados corretamente!')
-      return;
-    }
+  fechar(estatus) {
+    this.setState({
+      visivel: estatus,
+    })
   }
 
-  fechar(estatus) {
-    this.setState({ visivel: estatus })
+  enviar() {
+    let gasolina = this.state.gasolina
+    let alcool = this.state.alcool
+    let operacao = ((alcool / gasolina) * 100).toFixed(1)
+
+    if (operacao > 70) {
+      this.setState({ gasolina: gasolina });
+    } else {
+      this.setState({ alcool: alcool });
+    }
+
+    this.setState({
+      resultado: operacao,
+      visivel: true,
+    })
+  }
+
+  limpar() {
+    this.setState({
+      resultado: 0,
+    })
   }
 
   render() {
 
     return (
       <View style={styles.container}>
-        <View style={styles.header}>
-          <Image
-            source={require('./src/img/logo.png')}
-          />
-          <Text style={styles.texto1}>Qual a melhor opção?</Text>
-        </View>
         <View style={styles.body}>
-          <Text style={styles.texto2}>Álcool (preço por litro):</Text>
+          <View style={styles.bloco1}>
+            <Image
+              source={require('./src/img/logo.png')}
+            />
 
-          <TextInput
-            style={styles.input}
-            placeholder='R$ '
-            keyboardType="numeric"
-            onChangeText={(valor) => this.setState({ alcool: valor })}
-          />
+            <Text style={styles.texto1}>Qual a melhor opção?</Text>
+          </View>
 
-          <Text style={styles.texto2}>Gasolina (preço por litro):</Text>
+          <View style={styles.bloco2}>
 
-          <TextInput
-            style={styles.input}
-            placeholder='R$ '
-            keyboardType="numeric"
-            onChangeText={(valor) => this.setState({ gasolina: valor })}
-          />
+            <Text style={styles.texto2}>Álcool (preço por litro):</Text>
 
-          <TouchableOpacity style={styles.botao} onPress={this.enviar}>
-            <Text style={styles.botaoTexto}>Enviar</Text>
-          </TouchableOpacity>
+            <TextInput
+              style={styles.input}
+              placeholder='R$ '
+              keyboardType="numeric"
+              onChangeText={(valor) => this.setState({ alcool: valor })}
+            />
+
+            <Text style={styles.texto2}>Gasolina (preço por litro):</Text>
+
+            <TextInput
+              style={styles.input}
+              placeholder='R$ '
+              keyboardType="numeric"
+              onChangeText={(valor) => this.setState({ gasolina: valor })}
+            />
+
+            <TouchableOpacity style={styles.botao} onPress={this.enviar}>
+              <Text style={styles.botaoTexto}>Enviar</Text>
+            </TouchableOpacity>
+          </View>
 
           <Modal animationType="slide" visible={this.state.visivel} transparent={true}>
             <View style={styles.viewModal1}>
@@ -71,14 +94,16 @@ export default class App extends Component {
               />
 
               <View style={styles.viewModal2}>
-                <Text style={styles.textoModal1}>Compensa usar Álcool</Text>
+                <Text style={styles.textoModal1}>
+                  Compensa usar {(this.state.resultado > 70) ? "Gasolina" : "Álcool"}
+                </Text>
               </View>
 
               <Text style={styles.textoModal2}>Com os preços:</Text>
 
               <View style={styles.viewModal3}>
-                <Text style={styles.textoModal3}>Álcool: R$ 4.60</Text>
-                <Text style={styles.textoModal3}>Álcool: R$ 4.60</Text>
+                <Text style={styles.textoModal3}>Álcool: R$ {this.state.alcool}</Text>
+                <Text style={styles.textoModal3}>Gasolina: R$ {this.state.gasolina}</Text>
               </View>
 
               <TouchableOpacity style={styles.botaoVoltar} onPress={() => this.fechar(false)}>

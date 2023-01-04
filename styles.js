@@ -5,10 +5,9 @@ export const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#212121',
   },
-  header: {
+  body: {
     flex: 1,
-    marginTop: 90,
-    alignItems: 'center',
+    marginTop: 90,    
   },
   texto1: {
     marginTop: 35,
@@ -16,16 +15,10 @@ export const styles = StyleSheet.create({
     color: '#FFF',
     fontWeight: 'bold',
   },
-  body: {
-    alignItems: 'flex-start',
-    flex: 2,
-    paddingLeft: 18,
-    marginTop: 71,
-  },
   texto2: {
     fontSize: 18,
     color: '#FFF',
-    marginTop: 10,
+    marginTop: 10,    
   },
   input: {
     backgroundColor: '#FFFFFF',
@@ -95,5 +88,11 @@ export const styles = StyleSheet.create({
     fontSize: 20,
     color: '#EF4130',
     fontWeight: 'bold',
-  }
+  },
+  bloco1: {
+    alignItems: 'center',  
+  },
+  bloco2: {
+    paddingLeft: 18,
+  },
 })
